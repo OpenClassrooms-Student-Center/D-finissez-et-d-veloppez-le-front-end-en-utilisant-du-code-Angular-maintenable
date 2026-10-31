@@ -9,6 +9,7 @@ import Chart from 'chart.js/auto';
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.scss']
 })
+
 export class CountryComponent implements OnInit {
   private olympicUrl = './assets/mock/olympic.json';
   public lineChart!: Chart<"line", string[], number>;
