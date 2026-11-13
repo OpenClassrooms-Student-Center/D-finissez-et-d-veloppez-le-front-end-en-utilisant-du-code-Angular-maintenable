@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, input, OnDestroy, output, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
 
 const PIE_COLORS = ['#0b868f', '#adc3de', '#7a3c53', '#8f6263', '#ffa500', '#94819d'];
@@ -9,9 +9,9 @@ const PIE_COLORS = ['#0b868f', '#adc3de', '#7a3c53', '#8f6263', '#ffa500', '#948
   styleUrls: ['./medals-pie-chart.component.scss'],
 })
 export class MedalsPieChartComponent implements AfterViewInit, OnDestroy {
-  @Input() labels: string[] = [];
-  @Input() values: number[] = [];
-  @Output() countrySelected = new EventEmitter<number>();
+  labels = input<string[]>([]);
+  values = input<number[]>([]);
+  countrySelected = output<number>();
 
   @ViewChild('pieCanvas') canvas!: ElementRef<HTMLCanvasElement>;
 
@@ -21,11 +21,11 @@ export class MedalsPieChartComponent implements AfterViewInit, OnDestroy {
     this.chart = new Chart(this.canvas.nativeElement, {
       type: 'pie',
       data: {
-        labels: this.labels,
+        labels: this.labels(),
         datasets: [
           {
             label: 'Medals',
-            data: this.values,
+            data: this.values(),
             backgroundColor: PIE_COLORS,
             hoverOffset: 4,
           },

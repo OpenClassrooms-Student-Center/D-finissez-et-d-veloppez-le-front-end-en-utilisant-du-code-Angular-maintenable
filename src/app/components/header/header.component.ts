@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Indicator } from '../../models/indicator.model';
 
 @Component({
@@ -7,6 +7,6 @@ import { Indicator } from '../../models/indicator.model';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  @Input() title = '';
-  @Input() indicators: Indicator[] = [];
+  title = input<string>('');
+  indicators = input<Indicator[]>([]);
 }
