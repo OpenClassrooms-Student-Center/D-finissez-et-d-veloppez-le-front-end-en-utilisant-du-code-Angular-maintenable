@@ -1,0 +1,48 @@
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import Chart from 'chart.js/auto';
+
+const PIE_COLORS = ['#0b868f', '#adc3de', '#7a3c53', '#8f6263', '#ffa500', '#94819d'];
+
+@Component({
+  selector: 'app-medals-pie-chart',
+  templateUrl: './medals-pie-chart.component.html',
+  styleUrls: ['./medals-pie-chart.component.scss'],
+})
+export class MedalsPieChartComponent implements AfterViewInit, OnDestroy {
+  @Input() labels: string[] = [];
+  @Input() values: number[] = [];
+  @Output() countrySelected = new EventEmitter<number>();
+
+  @ViewChild('pieCanvas') canvas!: ElementRef<HTMLCanvasElement>;
+
+  private chart?: Chart<'pie', number[], string>;
+
+  ngAfterViewInit(): void {
+    this.chart = new Chart(this.canvas.nativeElement, {
+      type: 'pie',
+      data: {
+        labels: this.labels,
+        datasets: [
+          {
+            label: 'Medals',
+            data: this.values,
+            backgroundColor: PIE_COLORS,
+            hoverOffset: 4,
+          },
+        ],
+      },
+      options: {
+        aspectRatio: 2.5,
+        onClick: (_event, elements) => {
+          if (elements.length > 0) {
+            this.countrySelected.emit(elements[0].index);
+          }
+        },
+      },
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.chart?.destroy();
+  }
+}

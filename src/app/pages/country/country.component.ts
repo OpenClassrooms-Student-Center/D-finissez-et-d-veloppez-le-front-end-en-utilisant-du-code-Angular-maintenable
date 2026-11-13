@@ -14,7 +14,7 @@ export class CountryComponent implements OnInit {
   private olympicUrl = './assets/mock/olympic.json';
   public lineChart!: Chart<"line", string[], number>;
   public titlePage: string = '';
-  public totalEntries: any = 0;
+  public totalEntries: number = 0;
   public totalMedals: number = 0;
   public totalAthletes: number = 0;
   public error!: string;
